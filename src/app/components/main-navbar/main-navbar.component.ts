@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,27 +11,33 @@ import { AuthService } from 'src/app/services/auth.service';
 export class MainNavbarComponent implements OnInit {
   model: any = {};
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private alertify: AlertifyService
+  ) {}
 
   ngOnInit(): void {}
 
   login() {
     this.authService.login(this.model).subscribe(
       (next) => {
-        console.log('Login başarılı');
+        this.alertify.success('login başarılı');
+        this.router.navigate(['/members']);
       },
       (error) => {
-        console.log('Login hatalı');
+        this.alertify.error('Hatalı kullanıcı yada şifre');
       }
     );
   }
+
   loggedIn() {
-    const token = localStorage.getItem('token');
-    return token ? true : false;
+    return this.authService.loggedIn();
   }
 
   logout() {
     localStorage.removeItem('token');
-    console.log('logout');
+    this.alertify.warning('logout');
+    this.router.navigate(['/home']);
   }
 }
