@@ -24,6 +24,8 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { TimeagoModule } from 'ngx-timeago';
 import { MemberDetailsResolver } from './_resolvers/member-details.resolver';
 import { NgxLoadingModule } from 'ngx-loading';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MessageCreateComponent } from './components/messages/message-create/message-create.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -42,11 +44,13 @@ export function tokenGetter() {
     MemberDetailsComponent,
     PhotoGalleryComponent,
     MemberEditComponent,
+    MessageCreateComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    NgbModule,
     HttpClientModule,
     TimeagoModule.forRoot(),
     NgxLoadingModule.forRoot({}),
@@ -58,6 +62,7 @@ export function tokenGetter() {
       },
     }),
     RouterModule.forRoot(appRoutes),
+    NgbModule,
   ],
   providers: [
     AuthGuard,

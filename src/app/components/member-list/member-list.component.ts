@@ -12,6 +12,7 @@ import { User } from '../../_models/user';
 export class MemberListComponent implements OnInit {
   users: User[];
   public loading = false;
+  userParams: any = {};
 
   constructor(
     private userService: UserService,
@@ -19,12 +20,14 @@ export class MemberListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userParams.orderby = 'lastactive';
+    // this.userParams.gender = 'female';
     this.getUsers();
   }
 
   getUsers() {
     this.loading = true;
-    this.userService.getUsers().subscribe(
+    this.userService.getUsers(null, this.userParams).subscribe(
       (users) => {
         this.loading = false;
         this.users = users;

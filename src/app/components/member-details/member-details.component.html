@@ -4,7 +4,7 @@
       <div class="card">
         <div class="img-container">
           <img
-            src="{{ user?.profileImageUrl || 'assets/user.png' }}"
+            src="{{ user.profileImageUrl || 'assets/user.jpg' }}"
             class="card-img-top img-thumbnail"
             alt="{{ user?.name }}"
           />
@@ -12,19 +12,19 @@
         <div class="card-body">
           <div>
             <strong>Location</strong>
-            <p>{{ user?.country }}, {{ user?.city }}</p>
+            <p>{{ user.country }}, {{ user.city }}</p>
           </div>
           <div>
             <strong>Age</strong>
-            <p>{{ user?.age }}</p>
+            <p>{{ user.age }}</p>
           </div>
           <div>
             <strong>Created Date</strong>
-            <p>{{ user?.created | date: "shortDate" }}</p>
+            <p>{{ user.created | date: "shortDate" }}</p>
           </div>
           <div>
             <strong>Last Active</strong>
-            <p>{{ user?.lastActive | timeago }}</p>
+            <p>{{ user.lastActive | timeago }}</p>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div class="card mb-3">
         <div class="card-body">
           <div class="float-left">
-            <h3>{{ user?.name }}'s Profile</h3>
+            <h3>{{ user.name }}'s Profile</h3>
           </div>
           <div class="btn-group float-right" role="group">
             <button
@@ -43,7 +43,13 @@
             >
               {{ followText }}
             </button>
-            <button type="button" class="btn btn-success">Message</button>
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="openSendMessageModel()"
+            >
+              Message
+            </button>
           </div>
         </div>
       </div>
@@ -51,7 +57,7 @@
         <div class="card-body">
           <h5 class="card-title">About Me</h5>
           <p>
-            {{ user?.introduction }}
+            {{ user.introduction }}
           </p>
         </div>
       </div>
@@ -59,7 +65,7 @@
         <div class="card-body">
           <h5 class="card-title">Hobbies</h5>
           <p>
-            {{ user?.hobbies }}
+            {{ user.hobbies }}
           </p>
         </div>
       </div>
