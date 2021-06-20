@@ -16,6 +16,18 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { AuthGuard } from './_guards/auth-guard';
 import { ErrorInterceptor } from './services/error.intercaptor';
+import { JwtModule } from '@auth0/angular-jwt';
+import { MemberDetailsComponent } from './components/member-details/member-details.component';
+import { PhotoGalleryComponent } from './components/photo-gallery/photo-gallery.component';
+import { MemberEditComponent } from './components/member-edit/member-edit.component';
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
+import { TimeagoModule } from 'ngx-timeago';
+import { MemberDetailsResolver } from './_resolvers/member-details.resolver';
+import { NgxLoadingModule } from 'ngx-loading';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -27,12 +39,24 @@ import { ErrorInterceptor } from './services/error.intercaptor';
     HomeComponent,
     MessagesComponent,
     NotfoundComponent,
+    MemberDetailsComponent,
+    PhotoGalleryComponent,
+    MemberEditComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    TimeagoModule.forRoot(),
+    NgxLoadingModule.forRoot({}),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:44329'],
+        disallowedRoutes: ['localhost:44329/api/auth'],
+      },
+    }),
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
@@ -42,6 +66,8 @@ import { ErrorInterceptor } from './services/error.intercaptor';
       useClass: ErrorInterceptor,
       multi: true,
     },
+    MemberEditResolver,
+    MemberDetailsResolver,
   ],
   bootstrap: [AppComponent],
 })
